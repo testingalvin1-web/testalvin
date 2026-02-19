@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My GitHub Test Website with Five9 Chat</title>
+
+  <!-- Basic page styles -->
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 720px;
+      margin: 0 auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #111827;
+    }
+    p {
+      color: #374151;
+      line-height: 1.6;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #0078ff;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    a.button:hover {
+      background: #005fcc;
+    }
+    .note {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+  </style>
+
+  <!-- Five9 Social Widget library -->
+  <script src="https://app.five9.com/consoles/SocialWidget/five9-social-widget.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to My Test Page</h1>
+    <p>If you can see this page, GitHub Pages is working correctly.</p>
+    <p>The Five9 chat widget should load automatically based on the configuration below.</p>
+
+    <a class="button" id="openChatButton" href="javascript:void(0);">Open Chat</a>
+    <div class="note">
+      If chat does not appear automatically, click <strong>Open Chat</strong>.
+    </div>
+  </div>
+
+  <!-- Initialize Five9 widget -->
+  <script>
+    (function initFive9() {
+      // Your provided configuration
+      var options = {
+        "rootUrl": "https://app.five9.com/consoles/",
+        "type": "chat",
+        "title": "",
+        "tenant": "CS OMNI US",
+        "profiles": "Alvin - chat",
+        "showProfiles": true,
+        "autostart": true,                // Will auto-open if allowed by widget config
+        "theme": "default-theme.css",
+        "surveyOptions": {
+          "showComment": true,
+          "requireComment": false
+        },
+        "fields": {
+          "name": {
+            "value": "",
+            "show": true,
+            "label": "Name"
+          },
+          "email": {
+            "value": "",
+            "show": true,
+            "label": "Email"
+          },
+          "UserLocale": {
+            "value": "en",
+            "show": false
+          }
+        },
+        "playSoundOnMessage": true,
+        "allowCustomerToControlSoundPlay": false,
+        "showEmailButton": true,
+        "hideDuringAfterHours": false,
+        "useBusinessHours": true,
+        "showPrintButton": false,
+        "allowUsabilityMenu": false,
+        "enableCallback": false,
+        "callbackList": "",
+        "allowRequestLiveAgent": false
+      };
+
+      // Ensure the Five9 library is present before calling it
+      function addWidgetWhenReady() {
+        if (window.Five9SocialWidget && typeof Five9SocialWidget.addWidget === 'function') {
+          try {
+            Five9SocialWidget.addWidget(options);
+          } catch (e) {
+            console.error("Five9 widget init error:", e);
+          }
+        } else {
+          // Retry shortly if the script hasn't finished loading
+          setTimeout(addWidgetWhenReady, 150);
+        }
+      }
+      addWidgetWhenReady();
+
+      // Optional manual open button (works if widget exposes open method)
+      document.getElementById('openChatButton').addEventListener('click', function () {
+        if (window.Five9SocialWidget && typeof Five9SocialWidget.open === 'function') {
+          Five9SocialWidget.open();
+        } else {
+          // If no explicit open method, attempt to re-add (will autostart if enabled)
+          addWidgetWhenReady();
+        }
+      });
+    })();
+  </script>
+
+  <noscript>
+    Please enable JavaScript to use the Five9 chat widget.
+  </noscript>
+</body>
+</html>
